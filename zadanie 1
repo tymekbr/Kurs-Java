@@ -1,0 +1,113 @@
+
+import java.util.ArrayList;
+
+import java.util.Scanner;
+
+
+public class java1 {
+
+    public static void main(String[] args) {
+        Scanner scan = new Scanner(System.in);
+
+
+
+
+
+        System.out.println("Podaj nazwę pliku:");
+        String plik = scan.next();
+        boolean czy_wylaczyc = false;
+        while(!czy_wylaczyc) {
+
+
+            String result = Main.readFile(plik);
+            result.replace("\n", "");
+
+            ArrayList<String> wizytowki = new ArrayList<>();
+            String slowo = "";
+            for(int i = 0; i < result.length(); i++){
+
+                    if (result.charAt(i) == ';' || result.charAt(i) == '\n') {
+
+                        wizytowki.add(slowo);
+
+                        slowo = "";
+                    } else {
+                        slowo += result.charAt(i);
+                    }
+
+            }
+
+            System.out.println('\r');
+            System.out.println("a: znajdź wizytówkę");
+            System.out.println("b: wyświetl wszystkie");
+            System.out.println("c: dodaj wizytówkę");
+            System.out.println("d: wyłącz program");
+
+            String wykonaj = scan.next();
+
+            if(wykonaj.equals("d")){
+                System.out.println("Proces wyłączania programu zakończony wielkim sukcesem.");
+                czy_wylaczyc = true;
+            }
+            else if(wykonaj.equals("a")){
+                System.out.println("Podaj nazwisko:");
+                String nazwisko = scan.next();
+                for(int i = 1; i < wizytowki.size(); i+=4){
+                    if(wizytowki.get(i).equals(nazwisko)){
+                        System.out.println("Imię: "+wizytowki.get(i-1));
+
+                        System.out.println("Nazwisko: "+wizytowki.get(i));
+
+                        System.out.println("Numer telefonu: "+wizytowki.get(i+1));
+
+                        System.out.println("Adres e-mail: "+wizytowki.get(i+2));
+
+                    }
+                }
+
+            }
+            else if(wykonaj.equals("b")){
+                for(int i = 1; i < wizytowki.size(); i+=4){
+
+                        System.out.println("Imię: "+wizytowki.get(i-1));
+
+                        System.out.println("Nazwisko: "+wizytowki.get(i));
+
+                        System.out.println("Numer telefonu: "+wizytowki.get(i+1));
+
+                        System.out.println("Adres e-mail: "+wizytowki.get(i+2));
+
+                        System.out.println("\n");
+
+                }
+
+
+            }
+            else if(wykonaj.equals("c")){
+
+                String wizytowka = "";
+
+                System.out.println("Imię:");
+                wizytowka += scan.next();
+
+                System.out.println("Nazwisko:");
+                wizytowka += ";"+scan.next();
+
+                System.out.println("Numer telefonu:");
+                wizytowka += ";"+scan.next();
+
+                System.out.println("Adres e-mail:");
+                wizytowka += ";"+scan.next()+"\n";
+
+                Main.writeFile(plik, wizytowka);
+
+
+
+            }
+
+
+        }
+    }
+
+
+}
